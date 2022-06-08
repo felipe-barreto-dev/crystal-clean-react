@@ -10,5 +10,8 @@ module.exports = {
   // using ts-jest
   transform: {
     '^.+\\.tsx?$': 'ts-jest'
+  },
+  moduleNameMapper: {
+    '@/(.*)': '<rootDir>/src/$1'
   }
 };
