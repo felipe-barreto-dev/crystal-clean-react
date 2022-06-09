@@ -1,15 +1,13 @@
 import React from 'react';
 import Styles from './login-styles.scss';
-import Header from '@/presentation/components/login-header/login-header';
-import Input from '@/presentation/components/input/input';
-import Footer from '@/presentation/components/footer/footer';
+import { LoginHeader, Input, Footer } from '@/presentation/components';
 import { MailIcon, VisibilityOffIcon } from '@/assets/svg/';
 import colors from '@/presentation/styles/colors.scss';
 
 const Login: React.FC = () => {
   return (
     <div className={Styles.login}>
-      <Header />
+      <LoginHeader />
       <form className={Styles.form}>
         <h2>Login</h2>
         <Input

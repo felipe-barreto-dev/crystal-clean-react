@@ -1,5 +1,3 @@
-import MailIcon from './mail';
-import VisibilityIcon from './visibility';
-import VisibilityOffIcon from './visibility-off';
-
-export { MailIcon, VisibilityIcon, VisibilityOffIcon };
+export { default as MailIcon } from './mail';
+export { default as VisibilityIcon } from './visibility';
+export { default as VisibilityOffIcon } from './visibility-off';
