@@ -9,9 +9,18 @@ type Props = {
 };
 
 const Input: React.FC<Props> = (props: Props) => {
+  const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
+    event.target.readOnly = false;
+  };
   return (
     <div className={Styles.inputWrap}>
-      <input type={props.type} name={props.name} placeholder={props.placeholder} />
+      <input
+        readOnly
+        onFocus={enableInput}
+        type={props.type}
+        name={props.name}
+        placeholder={props.placeholder}
+      />
       <span className={Styles.status}>{props.icon}</span>
     </div>
   );
