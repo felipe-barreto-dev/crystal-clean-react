@@ -1,0 +1,40 @@
+@import "@/presentation/styles/colors.scss";
+
+* {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: $white;
+}
+
+input[type="password"],
+input[type="email"] {
+    border: 1px solid $primary;
+    line-height: 40px;
+    border-radius: 4px;
+    padding: 0px 40px 0px 8px;
+
+    &:focus {
+        outline-color: $primaryLight;
+    }
+}
+
+button {
+    background-color: $background;
+    border-width: 1px;
+    border-color: $primary;
+    color: $white;
+    border-radius: 8px;
+    font-size: 16px;
+    
+    line-height: 60px;
+
+    &:hover {
+        opacity: 0.6;
+    }
+}
