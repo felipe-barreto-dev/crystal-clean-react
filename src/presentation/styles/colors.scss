@@ -3,3 +3,11 @@ $background: #46464b;
 $primary: #73747c;
 $primaryDark: #1e1e21;
 $primaryLight: #46464b;
+
+:export {
+    white: $white;
+    background: $background;
+    primary: $primary;
+    primaryDark: $primaryDark;
+    primaryLight: $primaryLight;
+}

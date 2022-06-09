@@ -4,6 +4,7 @@ import Header from '@/presentation/components/login-header/login-header';
 import Input from '@/presentation/components/input/input';
 import Footer from '@/presentation/components/footer/footer';
 import { MailIcon, VisibilityOffIcon } from '@/assets/svg/';
+import colors from '@/presentation/styles/colors.scss';
 
 const Login: React.FC = () => {
   return (
@@ -11,12 +12,17 @@ const Login: React.FC = () => {
       <Header />
       <form className={Styles.form}>
         <h2>Login</h2>
-        <Input type="email" name="email" placeholder="E-mail" icon={<MailIcon />} />
+        <Input
+          type="email"
+          name="email"
+          placeholder="E-mail"
+          icon={<MailIcon color={colors.primary} />}
+        />
         <Input
           type="password"
           name="password"
           placeholder="Password"
-          icon={<VisibilityOffIcon />}
+          icon={<VisibilityOffIcon color={colors.primary} />}
         />
         <button className={Styles.submit} type="submit">
           Login
