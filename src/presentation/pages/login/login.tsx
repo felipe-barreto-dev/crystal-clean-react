@@ -14,13 +14,13 @@ const Login: React.FC = () => {
           type="email"
           name="email"
           placeholder="E-mail"
-          icon={<MailIcon color={colors.primary} />}
+          icon={<MailIcon color={colors.background} />}
         />
         <Input
           type="password"
           name="password"
           placeholder="Password"
-          icon={<VisibilityOffIcon color={colors.primary} />}
+          icon={<VisibilityOffIcon color={colors.background} />}
         />
         <button className={Styles.submit} type="submit">
           Login

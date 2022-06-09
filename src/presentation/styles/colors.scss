@@ -1,8 +1,9 @@
-$white: #FFFF;
-$background: #46464b;
-$primary: #73747c;
-$primaryDark: #1e1e21;
-$primaryLight: #46464b;
+$white: #EEEE;
+$background: #7D1128;
+$primary: #C41E3D;
+$primaryDark: #3C0919;
+$primaryLight: #D90A2C;
+$gradient: radial-gradient(105.91% 105.91% at 37.1% 19.35%, rgba(217, 10, 44, 0.3) 0%, rgba(217, 10, 44, 0) 83.11%);
 
 :export {
     white: $white;
