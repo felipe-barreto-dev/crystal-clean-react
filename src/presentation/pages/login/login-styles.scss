@@ -24,7 +24,8 @@
         }
 
         .submit {
-            margin-top: 32px;
+            margin-top: 16px;
+            width: 80%;           
             cursor: pointer;
         }
 
@@ -36,6 +37,15 @@
 
             &:hover {
                 text-decoration: underline;
+            }
+        }
+
+        .customSpinner {
+            margin-top: 24px;
+            div {        
+                &:after {
+                    background: $background;
+                }
             }
         }
     }
