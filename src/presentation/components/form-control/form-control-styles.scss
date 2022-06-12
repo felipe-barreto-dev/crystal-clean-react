@@ -1,0 +1,17 @@
+@import "@/presentation/styles/colors.scss";
+
+.formControlWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .button {
+    width: auto;
+    height: auto;
+  }
+
+  .error {
+    margin-top: 16px;
+    color: $primaryLight;
+  }
+}
