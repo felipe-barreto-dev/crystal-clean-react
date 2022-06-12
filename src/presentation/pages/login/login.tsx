@@ -2,7 +2,7 @@ import React from 'react';
 import Styles from './login-styles.scss';
 import { LoginHeader, Input, Footer } from '@/presentation/components';
 import { MailIcon, VisibilityOffIcon } from '@/assets/svg/';
-import colors from '@/presentation/styles/colors.scss';
+import colors from '../../styles/colors.scss'; // without alias to avoid jest errors
 
 const Login: React.FC = () => {
   return (
