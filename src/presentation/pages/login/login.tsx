@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Styles from './login-styles.scss';
 import { LoginHeader, Input, Footer, FormControl } from '@/presentation/components';
 import { MailIcon, VisibilityOffIcon } from '@/assets/svg/';
 import Context from '@/presentation/contexts/form/form-context';
+import { Validation } from '@/presentation/protocols/validation';
 import colors from '../../styles/colors.scss'; // without alias to avoid jest errors
 
-type StateProps = {
-  isLoading: boolean;
-  errorMessage: string;
+type Props = {
+  validation: Validation;
 };
 
-const Login: React.FC = () => {
-  const [state] = useState<StateProps>({
+const Login: React.FC<Props> = ({ validation }: Props) => {
+  const [state, setState] = useState({
     isLoading: false,
-    errorMessage: ''
+    errorMessage: '',
+    email: ''
   });
+
+  useEffect(() => {
+    if (validation) validation.validate({ email: state.email });
+  }, [state.email]);
+
   return (
     <div className={Styles.login}>
       <LoginHeader />
-      <Context.Provider value={state}>
+      <Context.Provider value={{ state, setState }}>
         <form className={Styles.form}>
           <h2>Login</h2>
           <Input
