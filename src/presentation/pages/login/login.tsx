@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import colors from '../../styles/colors.scss'; // without alias to avoid jest errors
 import Styles from './login-styles.scss';
 import { LoginHeader, Input, Footer, FormControl } from '@/presentation/components';
@@ -86,7 +87,9 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
             buttonStyle={Styles.submit}
             spinnerStyle={Styles.customSpinner}
           />
-          <span className={Styles.link}>Create Account</span>
+          <Link data-testid="signup" to={'/signup'} className={Styles.link}>
+            Create Account
+          </Link>
         </form>
       </Context.Provider>
       <Footer />
