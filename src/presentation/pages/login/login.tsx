@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import colors from '../../styles/colors.scss'; // without alias to avoid jest errors
 import Styles from './login-styles.scss';
 import { LoginHeader, Input, Footer, FormControl } from '@/presentation/components';
@@ -14,6 +14,7 @@ type Props = {
 };
 
 const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     isLoading: false,
     errorMessage: '',
@@ -55,6 +56,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
       });
 
       localStorage.setItem('accessToken', account.accessToken);
+      navigate('/');
     } catch (error) {
       setState({
         ...state,
