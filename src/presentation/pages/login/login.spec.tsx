@@ -1,7 +1,8 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
+import 'jest-localstorage-mock';
 import Login from './login';
-import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react';
+import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import { ValidationStub, AuthenticationSpy } from '@/presentation/test';
 
 type SutTypes = {
@@ -29,17 +30,28 @@ const simulateValidSubmit = (
   email = faker.internet.email(),
   password = faker.internet.password()
 ): void => {
-  const emailInput = sut.getByTestId('email');
-  fireEvent.input(emailInput, { target: { value: email } });
-  const passwordInput = sut.getByTestId('password');
-  fireEvent.input(passwordInput, { target: { value: password } });
-
+  populateEmailField(sut, email);
+  populatePasswordField(sut, password);
   const submitButton = sut.getByTestId('submit');
   fireEvent.click(submitButton);
 };
 
+const populateEmailField = (sut: RenderResult, email = faker.internet.email()): void => {
+  const emailInput = sut.getByTestId('email');
+  fireEvent.input(emailInput, { target: { value: email } });
+};
+
+const populatePasswordField = (sut: RenderResult, password = faker.internet.password()): void => {
+  const passwordInput = sut.getByTestId('password');
+  fireEvent.input(passwordInput, { target: { value: password } });
+};
+
 describe('Login Component', () => {
   afterEach(cleanup);
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
 
   test('Should start with initial state', () => {
     const { sut } = makeSut();
@@ -59,9 +71,7 @@ describe('Login Component', () => {
   test('Should show error if email validation fails', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
-    const emailInput = sut.getByTestId('email');
-    fireEvent.input(emailInput, { target: { value: faker.internet.email() } });
-
+    populateEmailField(sut);
     const errorMessage = sut.getByTestId('error-message');
     expect(errorMessage.textContent).toBe(validationError);
   });
@@ -69,9 +79,7 @@ describe('Login Component', () => {
   test('Should show error if password validation fails', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
-    const passwordInput = sut.getByTestId('password');
-    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } });
-
+    populatePasswordField(sut);
     const errorMessage = sut.getByTestId('error-message');
     expect(errorMessage.textContent).toBe(validationError);
   });
@@ -97,7 +105,18 @@ describe('Login Component', () => {
   test('Should call Authentication only once', () => {
     const { sut, authenticationSpy } = makeSut();
     simulateValidSubmit(sut);
-    simulateValidSubmit(sut);
-    expect(authenticationSpy.params).toBe(1);
+    expect(authenticationSpy.callsCount).toBe(1);
   });
+
+  /*
+  test('Should add accessToken to localstorage on success', async () => {
+    const { sut, authenticationSpy } = makeSut();
+    simulateValidSubmit(sut);
+    await waitFor(() => sut.getByTestId('form'));
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'accessToken',
+      authenticationSpy.account.accessToken
+    );
+  });
+  */
 });

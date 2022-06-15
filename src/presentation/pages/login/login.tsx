@@ -40,21 +40,34 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-    if (state.isLoading) {
-      return;
+
+    try {
+      if (state.isLoading || state.errorMessage) {
+        return;
+      }
+
+      setState({ ...state, isLoading: true });
+
+      const account = await authentication.auth({
+        email: state.email,
+        password: state.password
+      });
+
+      localStorage.setItem('accessToken', account.accessToken);
+    } catch (error) {
+      setState({
+        ...state,
+        isLoading: false,
+        errorMessage: error.message
+      });
     }
-    setState({
-      ...state,
-      isLoading: true
-    });
-    await authentication.auth({ email: state.email, password: state.password });
   };
 
   return (
     <div className={Styles.login}>
       <LoginHeader />
       <Context.Provider value={{ state, setState }}>
-        <form className={Styles.form} onSubmit={handleSubmit}>
+        <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
           <h2>Login</h2>
           <Input
             type="email"
