@@ -3,7 +3,12 @@ module.exports = {
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
-  collectCoverageFrom: ['<rootDir>/src/**/*.{ts,tsx}', '!**/*.d.ts'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.{ts,tsx}',
+    '!<rootDir>/src/main/**/*',
+    '!<rootDir>/src/presentation/components/router/**/*',
+    '!**/*.d.ts'
+  ],
   testEnvironment: 'jsdom',
   transformIgnorePatterns: ['\\\\node_modules\\\\', '\\.pnp\\.[^\\\\]+$'],
   roots: ['<rootDir>/src'],

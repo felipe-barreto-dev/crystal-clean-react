@@ -3,7 +3,7 @@ import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { faker } from '@faker-js/faker';
 import 'jest-localstorage-mock';
-import Login from './login';
+import { Login } from '@/presentation/pages';
 import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import { ValidationStub, AuthenticationSpy } from '@/presentation/test';
 
