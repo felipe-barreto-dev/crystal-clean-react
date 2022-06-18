@@ -6,4 +6,4 @@ cache:
     - node_modules
 script:
   - npm run lint 'src/**'
-  - npm run test:ci
+  - npm run test:coveralls
