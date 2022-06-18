@@ -1,3 +1,3 @@
-export const makeApiUrl = (): string => {
-  return 'http://arkansoftware.com/api/login';
+export const makeApiUrl = (path: string): string => {
+  return `http://arkansoftware.com/api/${path}`;
 };
