@@ -6,6 +6,7 @@ import 'jest-localstorage-mock';
 import { Login } from '@/presentation/pages';
 import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import { ValidationStub, AuthenticationSpy } from '@/presentation/test';
+import { InvalidCredentialsError } from '@/domain/errors';
 
 type SutTypes = {
   sut: RenderResult;
@@ -122,16 +123,22 @@ describe('Login Component', () => {
     expect(history.location.pathname).toBe('/signup');
   });
 
-  /*
-  test('Should add accessToken to localstorage on success', async () => {
-    const { sut, authenticationSpy } = makeSut();
-    simulateValidSubmit(sut);
-    await waitFor(() => sut.getByTestId('form'));
-    expect(localStorage.setItem).toHaveBeenCalledWith(
-      'accessToken',
-      authenticationSpy.account.accessToken
-    );
-    expect(history.location.pathname).toBe('/');
+  test('Should not call Authentication if form is invalid', () => {
+    const validationError = faker.random.words();
+    const { sut, authenticationSpy } = makeSut({ validationError });
+    populateEmailField(sut);
+    fireEvent.submit(sut.getByTestId('form'));
+    expect(authenticationSpy.callsCount).toBe(0);
   });
-  */
+
+  test('Should present error if Authentication fails', () => {
+    const { sut, authenticationSpy } = makeSut();
+    const error = new InvalidCredentialsError();
+    jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error));
+    simulateValidSubmit(sut);
+    setTimeout(() => {
+      const errorMessage = sut.getByTestId('error-message');
+      expect(errorMessage.textContent).toBe(error.message);
+    }, 200);
+  });
 });
