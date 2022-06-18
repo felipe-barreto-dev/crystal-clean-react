@@ -1,5 +1,9 @@
 language: node_js
-node_js: 'stable'
+node_js:
+  - 17
+cache:
+  directories:
+    - node_modules
 script:
   - npm run lint 'src/**'
   - npm run test:ci
