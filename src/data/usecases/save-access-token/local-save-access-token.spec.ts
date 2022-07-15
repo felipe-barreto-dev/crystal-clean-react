@@ -20,8 +20,9 @@ describe('LocalSaveAccessToken', () => {
   test('Should call SetStorage with correct value', async () => {
     const { sut, setStorageMock } = makeSut();
     const accessToken = faker.random.alphaNumeric();
-    sut.save(accessToken);
-    expect(setStorageMock.key).toBe('accessToken');
+    const key = faker.random.alphaNumeric();
+    sut.save(key, accessToken);
+    expect(setStorageMock.key).toBe(key);
     expect(setStorageMock.value).toBe(accessToken);
   });
 });

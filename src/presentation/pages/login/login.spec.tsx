@@ -5,12 +5,13 @@ import { faker } from '@faker-js/faker';
 import 'jest-localstorage-mock';
 import { Login } from '@/presentation/pages';
 import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react';
-import { ValidationStub, AuthenticationSpy } from '@/presentation/test';
+import { ValidationStub, AuthenticationSpy, SaveAccessTokenMock } from '@/presentation/test';
 import { InvalidCredentialsError } from '@/domain/errors';
 
 type SutTypes = {
   sut: RenderResult;
   authenticationSpy: AuthenticationSpy;
+  saveAccessTokenMock: SaveAccessTokenMock;
 };
 
 type SutParams = {
@@ -21,15 +22,21 @@ const history = createMemoryHistory({ initialEntries: ['/login'] });
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const authenticationSpy = new AuthenticationSpy();
+  const saveAccessTokenMock = new SaveAccessTokenMock();
   validationStub.errorMessage = params?.validationError;
   const sut = render(
     <HistoryRouter history={history}>
-      <Login validation={validationStub} authentication={authenticationSpy} />
+      <Login
+        validation={validationStub}
+        authentication={authenticationSpy}
+        saveAccessToken={saveAccessTokenMock}
+      />
     </HistoryRouter>
   );
   return {
     sut,
-    authenticationSpy
+    authenticationSpy,
+    saveAccessTokenMock
   };
 };
 
@@ -139,6 +146,14 @@ describe('Login Component', () => {
     setTimeout(() => {
       const errorMessage = sut.getByTestId('error-message');
       expect(errorMessage.textContent).toBe(error.message);
+    }, 200);
+  });
+
+  test('Should call SaveAccessToken on success', async () => {
+    const { sut, authenticationSpy, saveAccessTokenMock } = makeSut();
+    simulateValidSubmit(sut);
+    setTimeout(() => {
+      expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken);
     }, 200);
   });
 });
