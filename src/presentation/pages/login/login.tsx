@@ -6,15 +6,15 @@ import { LoginHeader, Input, Footer, FormControl } from '@/presentation/componen
 import { MailIcon, VisibilityOffIcon } from '@/assets/svg/';
 import Context from '@/presentation/contexts/form/form-context';
 import { Validation } from '@/presentation/protocols/validation';
-import { Authentication, SaveAccessToken } from '@/domain/usecases';
+import { Authentication, SaveToStorage } from '@/domain/usecases';
 
 type Props = {
   validation: Validation;
   authentication: Authentication;
-  saveAccessToken: SaveAccessToken;
+  storage: SaveToStorage;
 };
 
-const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }: Props) => {
+const Login: React.FC<Props> = ({ validation, authentication, storage }: Props) => {
   const navigate = useNavigate();
   const [state, setState] = useState({
     isLoading: false,
@@ -56,7 +56,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
         password: state.password
       });
 
-      await saveAccessToken.save(`${account.userName}-accessToken`, account.accessToken);
+      await storage.save(`${account.userName}`, account);
       navigate('/');
     } catch (error) {
       setState({

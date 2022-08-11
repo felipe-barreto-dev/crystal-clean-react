@@ -1,15 +1,15 @@
 {
   "name": "crystal-clean-react",
-  "version": "1.4.0",
+  "version": "1.7.0",
   "description": "Crystal Clean - React App using TDD, Clean Architecture and Typescript",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open",
-    "test": "jest --passWithNoTests --no-cache --runInBand",
     "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:ci": "npm test -- --coverage",
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
-    "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "prepare": "husky install",
     "check": "npm-check -u -s"
@@ -19,6 +19,7 @@
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^7.2.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@types/axios": "^0.14.0",
     "@types/jest": "^28.1.2",
