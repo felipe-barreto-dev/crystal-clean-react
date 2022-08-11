@@ -1,6 +1,6 @@
-import { RemoteAuthentication } from './remote-authentication';
-import { HttpPostClientSpy } from '@/data/test';
-import { mockAccountModel, mockAuthentication } from '@/domain/test';
+import { RemoteAuthentication } from '@/data/usecases/authentication/remote-authentication';
+import { HttpPostClientSpy } from '@/tests/data/mocks';
+import { mockAccountModel, mockAuthentication } from '@/tests/domain/mocks';
 import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors';
 import { faker } from '@faker-js/faker';
 import { HttpStatusCode } from '@/data/protocols/http';

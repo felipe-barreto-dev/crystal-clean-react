@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker';
 import 'jest-localstorage-mock';
 import { Login } from '@/presentation/pages';
 import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react';
-import { ValidationStub, AuthenticationSpy, StorageMock } from '@/presentation/test';
+import { ValidationStub, AuthenticationSpy, StorageMock } from '@/tests/presentation/mocks';
 import { InvalidCredentialsError } from '@/domain/errors';
 
 type SutTypes = {

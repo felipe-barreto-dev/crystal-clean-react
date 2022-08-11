@@ -1,5 +1,5 @@
-import { LocalSaveStorage } from './local-save-storage';
-import { SetStorageMock } from '@/data/test/mock-storage';
+import { LocalSaveStorage } from '@/data/usecases/local-save-storage/local-save-storage';
+import { SetStorageMock } from '@/tests/data/mocks';
 import { faker } from '@faker-js/faker';
 
 type SutTypes = {
