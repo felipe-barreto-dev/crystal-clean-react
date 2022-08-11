@@ -1,28 +1,28 @@
-import { LocalSaveAccessToken } from './local-save-access-token';
+import { LocalSaveStorage } from './local-save-storage';
 import { SetStorageMock } from '@/data/test/mock-storage';
 import { faker } from '@faker-js/faker';
 
 type SutTypes = {
-  sut: LocalSaveAccessToken;
+  sut: LocalSaveStorage;
   setStorageMock: SetStorageMock;
 };
 
 const makeSut = (): SutTypes => {
   const setStorageMock = new SetStorageMock();
-  const sut = new LocalSaveAccessToken(setStorageMock);
+  const sut = new LocalSaveStorage(setStorageMock);
   return {
     sut,
     setStorageMock
   };
 };
 
-describe('LocalSaveAccessToken', () => {
-  test('Should call SetStorage with correct value', async () => {
+describe('LocalSaveStorage', () => {
+  test('Should call SetStorage with correct value', () => {
     const { sut, setStorageMock } = makeSut();
-    const accessToken = faker.random.alphaNumeric();
+    const content = faker.science.unit();
     const key = faker.random.alphaNumeric();
-    sut.save(key, accessToken);
+    sut.save(key, content);
     expect(setStorageMock.key).toBe(key);
-    expect(setStorageMock.value).toBe(accessToken);
+    expect(setStorageMock.value).toBe(content);
   });
 });

@@ -4,14 +4,14 @@ import { createMemoryHistory } from 'history';
 import { faker } from '@faker-js/faker';
 import 'jest-localstorage-mock';
 import { Login } from '@/presentation/pages';
-import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react';
-import { ValidationStub, AuthenticationSpy, SaveAccessTokenMock } from '@/presentation/test';
+import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react';
+import { ValidationStub, AuthenticationSpy, StorageMock } from '@/presentation/test';
 import { InvalidCredentialsError } from '@/domain/errors';
 
 type SutTypes = {
   sut: RenderResult;
   authenticationSpy: AuthenticationSpy;
-  saveAccessTokenMock: SaveAccessTokenMock;
+  storageMock: StorageMock;
 };
 
 type SutParams = {
@@ -22,21 +22,17 @@ const history = createMemoryHistory({ initialEntries: ['/login'] });
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const authenticationSpy = new AuthenticationSpy();
-  const saveAccessTokenMock = new SaveAccessTokenMock();
+  const storageMock = new StorageMock();
   validationStub.errorMessage = params?.validationError;
   const sut = render(
     <HistoryRouter history={history}>
-      <Login
-        validation={validationStub}
-        authentication={authenticationSpy}
-        saveAccessToken={saveAccessTokenMock}
-      />
+      <Login validation={validationStub} authentication={authenticationSpy} storage={storageMock} />
     </HistoryRouter>
   );
   return {
     sut,
     authenticationSpy,
-    saveAccessTokenMock
+    storageMock
   };
 };
 
@@ -149,11 +145,11 @@ describe('Login Component', () => {
     }, 200);
   });
 
-  test('Should call SaveAccessToken on success', async () => {
-    const { sut, authenticationSpy, saveAccessTokenMock } = makeSut();
+  test('Should call Storage on success', async () => {
+    const { sut, authenticationSpy, storageMock } = makeSut();
     simulateValidSubmit(sut);
     setTimeout(() => {
-      expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken);
+      expect(storageMock.content).toBe(authenticationSpy.account);
     }, 200);
   });
 });
