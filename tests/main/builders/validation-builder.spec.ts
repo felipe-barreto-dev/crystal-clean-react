@@ -4,7 +4,7 @@ import {
   EmailValidation,
   MinLengthValidation
 } from '@/validation/validators';
-import { ValidationBuilder as sut } from '@/validation/validators';
+import { ValidationBuilder as sut } from '@/main/builders';
 
 describe('ValidationBuilder', () => {
   test('Should return RequiredFieldValidation', () => {
